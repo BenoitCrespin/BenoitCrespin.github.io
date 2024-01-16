@@ -6,9 +6,9 @@
 
 <body>
     <a-scene>
-        <a-box id="box" position="0 1.6 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+        <a-box id="box" position="0 1.6 -3" rotation="0 45 0" color="#4CC3D9" clickable></a-box>
         <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-        <a-entity id="pointer" pointlaser="color: red; distance: 30; diameter: 0.05"></a-entity>
+        <a-entity id="pointer" laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
         <a-text id="textbox" value="Hello, World!" position="0 3 -3" color="#4CC3D9" visible="true"></a-text>
     </a-scene>
 
@@ -22,7 +22,7 @@
         textbox.setAttribute('visible', true);
 
         // Add an event listener to the laser pointer that listens for the `hit` event
-        pointer.addEventListener('hit', (event) => {
+        pointer.addEventListener('triggerdown', (event) => {
             // Check if the object that was hit is the box
             if (event.detail.target.id === 'box') {
                 // If it is, show the textbox
