@@ -18,24 +18,56 @@
         <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable"></a-entity>
     </a-scene>
 
-    <script>
-        var rotating = false;
-        var box = document.querySelector('a-box');
+    <body>
+        <a-scene>
+            <!-- Ajoutez votre contenu VR ici -->
+            <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" clickable></a-box>
+            <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+            <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+            <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
-        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte
-        box.addEventListener('click', function () {
-            alert('Vous avez cliqué sur la boîte avec le contrôleur HTC Vive !');
-        });
+            <!-- Ajoutez les contrôleurs HTC Vive avec raycaster -->
+            <a-entity id="leftController" vive-controls="hand: left" raycaster="objects: .clickable"></a-entity>
+            <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable"></a-entity>
+        </a-scene>
 
-        // Optionnel : Ajoutez des gestionnaires d'événements pour le clic des contrôleurs individuels
-        document.querySelector('#leftController').addEventListener('triggerdown', function () {
-            alert('Clic sur le contrôleur gauche HTC Vive !');
-        });
+        <script>
+            var rotating = false;
+            var box = document.querySelector('a-box');
 
-        document.querySelector('#rightController').addEventListener('triggerdown', function () {
-            alert('Clic sur le contrôleur droit HTC Vive !');
-        });
-    </script>
-</body>
+            // Ajoutez un gestionnaire d'événements pour le clic sur la boîte
+            box.addEventListener('click', function () {
+                rotating = !rotating; // Inversez l'état de rotation à chaque clic
+
+                if (rotating) {
+                    // Commencez à faire tourner la boîte sur elle-même
+                    rotateBox();
+                } else {
+                    // Arrêtez la rotation
+                    stopRotation();
+                }
+            });
+
+            function rotateBox() {
+                // Faites tourner la boîte sur elle-même (modifier la rotation)
+                var rotationInterval = setInterval(function () {
+                    var currentRotation = box.getAttribute('rotation');
+                    box.setAttribute('rotation', {
+                        x: currentRotation.x,
+                        y: currentRotation.y + 1, // Vitesse de rotation (ajustez selon vos besoins)
+                        z: currentRotation.z,
+                    });
+                }, 16); // Mettez à jour toutes les 16 ms (60 FPS)
+
+                // Stockez l'ID de l'intervalle pour pouvoir l'arrêter plus tard
+                box.rotationIntervalId = rotationInterval;
+            }
+
+            function stopRotation() {
+                // Arrêtez la rotation en effaçant l'intervalle
+                clearInterval(box.rotationIntervalId);
+            }
+        </script>
+    </body>
 
 </html>
