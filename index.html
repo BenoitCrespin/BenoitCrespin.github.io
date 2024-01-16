@@ -13,16 +13,16 @@
         <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
         <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
-        <!-- Ajoutez les contrôleurs HTC Vive avec raycaster -->
-        <a-entity id="leftController" vive-controls="hand: left" raycaster="objects: .clickable"></a-entity>
-        <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable"></a-entity>
+        <!-- Ajoutez les contrôleurs HTC Vive avec laser-controls et raycaster -->
+        <a-entity id="leftController" laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
+        <a-entity id="rightController" laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
     </a-scene>
 
     <script>
         var rotating = false;
         var box = document.querySelector('a-box');
 
-        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte
+        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte (souris)
         box.addEventListener('click', function () {
             rotating = !rotating; // Inversez l'état de rotation à chaque clic
 
@@ -32,6 +32,23 @@
             } else {
                 // Arrêtez la rotation
                 stopRotation();
+            }
+        });
+
+        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte (contrôleur droit)
+        document.querySelector('#rightController').addEventListener('triggerdown', function () {
+            var intersects = document.querySelector('#rightController').components.raycaster.intersectedEls;
+
+            if (intersects && intersects.length > 0 && intersects[0].object === box) {
+                rotating = !rotating; // Inversez l'état de rotation à chaque clic
+
+                if (rotating) {
+                    // Commencez à faire tourner la boîte sur elle-même
+                    rotateBox();
+                } else {
+                    // Arrêtez la rotation
+                    stopRotation();
+                }
             }
         });
 
