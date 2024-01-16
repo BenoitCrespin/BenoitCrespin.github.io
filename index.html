@@ -13,14 +13,18 @@
         <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
         <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
-        <!-- Ajoutez les contrôleurs HTC Vive avec laser-controls et raycaster -->
-        <a-entity id="leftController" raycaster="objects: .clickable"></a-entity>
-        <a-entity id="rightController" raycaster="objects: .clickable"></a-entity>   
-     </a-scene>
+        <!-- Ajoutez les contrôleurs HTC Vive avec vive-controls et raycaster -->
+        <a-entity vive-controls="hand: left" raycaster="objects: .clickable"></a-entity>
+        <a-entity vive-controls="hand: right" raycaster="objects: .clickable"></a-entity>
+    </a-scene>
 
     <script>
         var rotating = false;
         var box = document.querySelector('a-box');
+        var leftController = document.querySelector('[vive-controls="hand: left"]');
+        var rightController = document.querySelector('[vive-controls="hand: right"]');
+        var leftRaycaster = leftController.components.raycaster;
+        var rightRaycaster = rightController.components.raycaster;
 
         // Ajoutez un gestionnaire d'événements pour le clic sur la boîte (souris)
         box.addEventListener('click', function () {
@@ -35,11 +39,24 @@
             }
         });
 
-        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte (contrôleur droit)
-        document.querySelector('#rightController').addEventListener('triggerdown', function () {
-            var intersects = document.querySelector('#rightController').components.raycaster.intersectedEls;
+        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte (contrôleur gauche)
+        leftController.addEventListener('triggerdown', function () {
+            if (isControllerIntersectingBox(leftRaycaster)) {
+                rotating = !rotating; // Inversez l'état de rotation à chaque clic
 
-            if (intersects && intersects.length > 0 && intersects[0].object === box) {
+                if (rotating) {
+                    // Commencez à faire tourner la boîte sur elle-même
+                    rotateBox();
+                } else {
+                    // Arrêtez la rotation
+                    stopRotation();
+                }
+            }
+        });
+
+        // Ajoutez un gestionnaire d'événements pour le clic sur la boîte (contrôleur droit)
+        rightController.addEventListener('triggerdown', function () {
+            if (isControllerIntersectingBox(rightRaycaster)) {
                 rotating = !rotating; // Inversez l'état de rotation à chaque clic
 
                 if (rotating) {
@@ -70,6 +87,12 @@
         function stopRotation() {
             // Arrêtez la rotation en effaçant l'intervalle
             clearInterval(box.rotationIntervalId);
+        }
+
+        function isControllerIntersectingBox(controllerRaycaster) {
+            // Vérifiez s'il y a une intersection avec la boîte
+            var intersects = controllerRaycaster.intersectedEls;
+            return intersects && intersects.length > 0 && intersects[0].object === box;
         }
     </script>
 </body>
