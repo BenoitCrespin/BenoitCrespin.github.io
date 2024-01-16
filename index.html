@@ -14,9 +14,9 @@
         <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
         <!-- Ajoutez les contrôleurs HTC Vive avec laser-controls et raycaster -->
-        <a-entity id="leftController" laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
-        <a-entity id="rightController" laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
-    </a-scene>
+        <a-entity id="leftController" raycaster="objects: .clickable"></a-entity>
+        <a-entity id="rightController" raycaster="objects: .clickable"></a-entity>   
+     </a-scene>
 
     <script>
         var rotating = false;
