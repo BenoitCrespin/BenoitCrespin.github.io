@@ -10,17 +10,26 @@
 
 <body>
     <a-scene>
-        <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" clickable></a-box>
-        <a-entity id="leftController" vive-controls="hand: left"></a-entity>
-        <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable; showLine:true;"></a-entity>
+        <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" class="clickable"></a-box>
+        <a-sphere id="sphere" position="2 1.6 -6" radius="0.5" color="#FF0000"></a-sphere>
+
+        <a-entity id="leftController" vive-focus-controls="hand: left"></a-entity>
+        <a-entity id="rightController" vive-focus-controls="hand: right"
+            raycaster="showLine:true;objects: .clickable"></a-entity>
 
         <script>
+            var gachettePressee = false;
             var rightController = document.querySelector('#rightController');
-
-            rightController.raycaster.addEventListener('intersection', function (event) {
-                if (event.object) {
+            rightController.addEventListener('triggerdown', function () {
+                gachettePressee = true;
+            });
+            rightController.addEventListener('triggerup', function () {
+                gachettePressee = false;
+            });
+            rightController.addEventListener('raycaster-intersection', function () {
+                if (gachettePressee == true) {
                     var box = document.querySelector('#myBox');
-                    box.setAttribute('color', Math.floor(Math.random()*16777215).toString(16));
+                    box.setAttribute('color', Math.floor(Math.random() * 16777215).toString(16));
                 }
             });
 
