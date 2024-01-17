@@ -11,16 +11,16 @@
 <body>
     <a-scene>
         <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" clickable></a-box>
-        <a-entity id="leftController" vive-controls="hand: left" raycaster="objects: .clickable"></a-entity>
-        <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable"></a-entity>
+        <a-entity id="leftController" vive-controls="hand: left"></a-entity>
+        <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable; showLine:true;"></a-entity>
 
         <script>
             var rightController = document.querySelector('#rightController');
 
-            rightController.addEventListener('triggerup', function () {
-                if (event.trigger === 1 && event.object === document.querySelector('#myBox')) {
+            rightController.raycaster.addEventListener('intersection', function (event) {
+                if (event.object) {
                     var box = document.querySelector('#myBox');
-                    box.setAttribute('color', Math.floor(Math.random() * 16777215).toString(16));
+                    box.setAttribute('color', Math.floor(Math.random()*16777215).toString(16));
                 }
             });
 
