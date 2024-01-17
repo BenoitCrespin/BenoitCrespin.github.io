@@ -22,6 +22,8 @@
             var rightController = document.querySelector('#rightController');
             rightController.addEventListener('triggerdown', function () {
                 gachettePressee = true;
+                var s = document.querySelector("#sphere");
+                s.setAttribute('color', Math.floor(Math.random() * 16777215).toString(16));
             });
             rightController.addEventListener('triggerup', function () {
                 gachettePressee = false;
