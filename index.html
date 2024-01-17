@@ -5,82 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple VR Scene</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 
 <body>
     <a-scene>
-        <!-- Ajoutez une boîte à la scène -->
         <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" clickable></a-box>
-
-        <!-- Ajoutez un contrôleur laser pour la main gauche -->
-        <a-entity id="leftController" laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
-
-        <!-- Ajoutez un contrôleur laser pour la main droite -->
-        <a-entity id="rightController" laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
-
+        <a-entity id="leftController" vive-controls="hand: left" raycaster="objects: .clickable"></a-entity>
+        <a-entity id="rightController" vive-controls="hand: right" raycaster="objects: .clickable"></a-entity>
 
         <script>
-            var rotating = false;
-            var box = document.getElementById('myBox');
-            var leftController = document.getElementById('leftController');
-            var rightController = document.getElementById('rightController');
+            var rightController = document.querySelector('#rightController');
 
-            // Ajoutez un gestionnaire d'événements pour le clic sur le contrôleur gauche
-            leftController.addEventListener('triggerdown', function () {
-                if (isControllerIntersectingBox(leftController.components.raycaster)) {
-                    rotating = !rotating; // Inversez l'état de rotation à chaque clic
-
-                    if (rotating) {
-                        // Commencez à faire tourner la boîte sur elle-même
-                        rotateBox();
-                    } else {
-                        // Arrêtez la rotation
-                        stopRotation();
-                    }
+            rightController.addEventListener('triggerup', function () {
+                if (event.trigger === 1 && event.object === document.querySelector('#myBox')) {
+                    var box = document.querySelector('#myBox');
+                    box.setAttribute('color', Math.floor(Math.random() * 16777215).toString(16));
                 }
             });
 
-            // Ajoutez un gestionnaire d'événements pour le clic sur le contrôleur droit
-            rightController.addEventListener('triggerdown', function () {
-                if (isControllerIntersectingBox(rightController.components.raycaster)) {
-                    rotating = !rotating; // Inversez l'état de rotation à chaque clic
-
-                    if (rotating) {
-                        // Commencez à faire tourner la boîte sur elle-même
-                        rotateBox();
-                    } else {
-                        // Arrêtez la rotation
-                        stopRotation();
-                    }
-                }
-            });
-
-            function rotateBox() {
-                // Faites tourner la boîte sur elle-même (modifier la rotation)
-                var rotationInterval = setInterval(function () {
-                    var currentRotation = box.getAttribute('rotation');
-                    box.setAttribute('rotation', {
-                        x: currentRotation.x,
-                        y: currentRotation.y + 1, // Vitesse de rotation (ajustez selon vos besoins)
-                        z: currentRotation.z,
-                    });
-                }, 16); // Mettez à jour toutes les 16 ms (60 FPS)
-
-                // Stockez l'ID de l'intervalle pour pouvoir l'arrêter plus tard
-                box.rotationIntervalId = rotationInterval;
-            }
-
-            function stopRotation() {
-                // Arrêtez la rotation en effaçant l'intervalle
-                clearInterval(box.rotationIntervalId);
-            }
-
-            function isControllerIntersectingBox(controllerRaycaster) {
-                // Vérifiez s'il y a une intersection avec la boîte
-                var intersects = controllerRaycaster.intersectedEls;
-                return intersects && intersects.length > 0 && intersects[0].object === box;
-            }
         </script>
     </a-scene>
 </body>
