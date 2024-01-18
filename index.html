@@ -10,20 +10,22 @@
 
 <body>
     <script>
-    AFRAME.registerComponent('collider-check', {
-        dependencies: ['raycaster'],
-      
-        init: function () {
-          this.el.addEventListener('raycaster-intersection', function () {
-            var box = document.querySelector('#myBox');
-            if (box.getAttribute("gachettePressee") == "oui")
-                box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
-          });
-        }
-      });
+        AFRAME.registerComponent('collider-check', {
+            dependencies: ['raycaster'],
+
+            init: function () {
+                this.el.addEventListener('raycaster-intersection', function () {
+                    var box = document.querySelector('#myBox');
+                    if (box.getAttribute("gachettePressee") == "oui")
+                        box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
+                });
+            }
+        });
     </script>
-    <a-scene cursor="rayOrigin: mouse">
-        <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" class="collidable" gachettePressee="non"></a-box>
+    <!-- <a-scene cursor="rayOrigin: mouse"> -->
+    <a-scene>
+        <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" class="collidable"
+            gachettePressee="non"></a-box>
         <a-sphere id="mySphere" position="2 1.6 -6" radius="0.5" color="#FF0000"></a-sphere>
 
         <a-entity id="leftController" vive-controls="hand: left"></a-entity>
@@ -40,13 +42,13 @@
 
             var rightController = document.querySelector('#rightController');
             rightController.addEventListener('triggerdown', function () {
-                var box = document.querySelector('#myBox');                
+                var box = document.querySelector('#myBox');
                 box.setAttribute('gachettePressee', "oui");
                 var s = document.querySelector("#mySphere");
                 s.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
             });
             rightController.addEventListener('triggerup', function () {
-                var box = document.querySelector('#myBox');                
+                var box = document.querySelector('#myBox');
                 box.setAttribute('gachettePressee', "non");
             });
             // document.querySelector('#myBox').addEventListener('raycaster-intersected', evt => {
