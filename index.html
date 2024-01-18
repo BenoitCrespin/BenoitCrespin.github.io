@@ -16,7 +16,7 @@
             init: function () {
                 this.el.addEventListener('raycaster-intersection', function () {
                     var box = document.querySelector('#myBox');
-                    if (box.getAttribute("gachettePressee") == "oui")
+                    //if (box.getAttribute("gachettePressee") == "oui")
                         box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
                 });
             }
@@ -30,7 +30,7 @@
 
         <a-entity id="leftController" vive-controls="hand: left"></a-entity>
         <a-entity id="rightController" vive-controls="hand: right">
-            <a-entity raycaster="showLine:true;objects: .collidable"></a-entity>
+            <a-entity raycaster="showLine:true;objects: .collidable" cursor></a-entity>
         </a-entity>
 
         <script>
