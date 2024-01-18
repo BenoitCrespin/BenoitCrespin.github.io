@@ -33,7 +33,7 @@
             rightController.addEventListener('triggerup', function () {
                 gachettePressee = false;
             });
-            rightController.raycaster.addEventListener('raycaster-intersection', function () {
+            document.querySelector('#myBox').addEventListener('raycaster-intersected', function (event) {
                 if (gachettePressee == true) {
                     var box = document.querySelector('#myBox');
                     box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
