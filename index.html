@@ -9,13 +9,30 @@
 </head>
 
 <body>
+    <script>
+        AFRAME.registerComponent('cursor-listener', {
+            init: function () {
+                this.el.addEventListener('raycaster-intersected', evt => {
+                    this.raycaster = evt.detail.el;
+                });
+                this.el.addEventListener('raycaster-intersected-cleared', evt => {
+                    this.raycaster = null;
+                });
+            },
+            tick: function () {
+                if (!this.raycaster) { return; }  // Not intersecting.
+                var box = document.querySelector('#myBox');
+                box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
+            }
+        });
+    </script>
     <a-scene cursor="rayOrigin: mouse">
-        <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" class="clickable"></a-box>
+        <a-box position="0 1.6 -4" color="#4CC3D9" scale="1 1 1" id="myBox" class="clickable cursor-listener"></a-box>
         <a-sphere id="mySphere" position="2 1.6 -6" radius="0.5" color="#FF0000"></a-sphere>
 
         <a-entity id="leftController" vive-controls="hand: left"></a-entity>
         <a-entity id="rightController" vive-controls="hand: right"
-            raycaster="showLine:true;objects: .clickable"></a-entity>
+            raycaster="showLine:true;objects: .cursor-listener"></a-entity>
 
         <script>
             var gachettePressee = false;
@@ -24,6 +41,7 @@
                 box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
                 alert('Vous avez cliqué sur la boîte !');
             });
+
             var rightController = document.querySelector('#rightController');
             rightController.addEventListener('triggerdown', function () {
                 gachettePressee = true;
@@ -33,13 +51,12 @@
             rightController.addEventListener('triggerup', function () {
                 gachettePressee = false;
             });
-            rightController.components.raycaster.addEventListener('raycaster-intersection', function (event) {
-                if (gachettePressee) 
-                {
-                    var box = document.querySelector('#myBox');
-                    box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
-                }
-            });
+            // document.querySelector('#myBox').addEventListener('raycaster-intersected', evt => {
+            //     if (gachettePressee) {
+            //         var box = document.querySelector('#myBox');
+            //         box.setAttribute('color', '#' + Math.floor(Math.random() * 16777215).toString(16));
+            //     }
+            // });
 
         </script>
     </a-scene>
