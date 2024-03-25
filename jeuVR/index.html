@@ -1,0 +1,141 @@
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
+  <title>BinIt</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+
+<body>
+  <a-scene id="scene" physics="gravity: -7; debug: false">
+    <a-assets>
+      <img id="play" src="./assets/play.png">
+      <img id="rules" src="./assets/rules.png">
+
+      <!-- OBJECTS -->
+      <a-asset-item id="bag-glb" src="items/bag.glb"></a-asset-item>
+      <a-asset-item id="bocale-glb" src="items/bocale.glb"></a-asset-item>
+      <a-asset-item id="book-glb" src="items/book.glb"></a-asset-item>
+      <a-asset-item id="brocolis-glb" src="items/brocolis.glb"></a-asset-item>
+      <a-asset-item id="coca-glb" src="items/coca.glb"></a-asset-item>
+      <a-asset-item id="glass-glb" src="items/glass.glb"></a-asset-item>
+      <a-asset-item id="headphones-glb" src="items/headphones.glb"></a-asset-item>
+      <a-asset-item id="ketchup-glb" src="items/ketchup.glb"></a-asset-item>
+      <a-asset-item id="keyboard-glb" src="items/keyboard.glb"></a-asset-item>
+      <a-asset-item id="knife-glb" src="items/knife.glb"></a-asset-item>
+      <a-asset-item id="mac-glb" src="items/mac.glb"></a-asset-item>
+      <a-asset-item id="obergine-glb" src="items/obergine.glb"></a-asset-item>
+      <a-asset-item id="paper-glb" src="items/paper.glb"></a-asset-item>
+      <a-asset-item id="peach-glb" src="items/peach.glb"></a-asset-item>
+      <a-asset-item id="postit-glb" src="items/postit.glb"></a-asset-item>
+      <a-asset-item id="tin-glb" src="items/tin.glb"></a-asset-item>
+      <a-asset-item id="water-glb" src="items/water.glb"></a-asset-item>
+      <a-asset-item id="wine-glb" src="items/wine.glb"></a-asset-item>
+      <a-asset-item id="radio-glb" src="items/Radio.glb"></a-asset-item>
+      <img id="titleImg" src="./assets/BinIt.png">
+
+
+      <!-- ENVIRONMENT -->
+      <a-asset-item id="park" src="environment/park.glb"></a-asset-item>
+
+      <!-- poubelles -->
+      <a-asset-item id="bin_blue" src="environment/bin_blue.glb"></a-asset-item>
+      <a-asset-item id="bin_green" src="environment/bin_green.glb"></a-asset-item>
+      <a-asset-item id="bin_red" src="environment/bin_red.glb"></a-asset-item>
+      <a-asset-item id="bin_yellow" src="environment/bin_yellow.glb"></a-asset-item>
+      <a-asset-item id="bin_pink" src="environment/bin_pink.glb"></a-asset-item>
+      <a-asset-item id="bin_orange" src="environment/bin_orange.glb"></a-asset-item>
+
+      <!-- plaquette -->
+      <a-asset-item id="plaquette" src="environment/plaquette.glb"></a-asset-item>
+
+      <!-- Table -->
+      <a-asset-item id="table_metal" src="environment/table_metal.glb"></a-asset-item>
+
+      <!-- Pedestal -->
+      <a-asset-item id="pedestal" src="environment/pedestal.glb"></a-asset-item>
+
+    </a-assets>
+
+    <audio id="sound+" src="./assets/point+.wav"></audio>
+    <audio id="sound-" src="./assets/point-.wav"></audio>
+
+
+    <!-- CAMERA -->
+    <a-entity id="camera" cursor collider-check raycaster="objects: .collidable; showLine:false;" camera look-controls
+      wasd-controls position="0 2 1">
+    </a-entity>
+
+    <a-image id="playbutton" class="collidable" src="#play" position="0 1.2 -1" width=".54" height="0.25"></a-image>
+    <a-image id="rulesbutton" src="#rules" position="0 2.5 -5" width="7.24" height="4"></a-image>
+
+    <!-- HANDS -->
+    <a-entity class="hand" collider-check raycaster="objects: .collidable; showLine:true;"
+      static-body="shape: sphere; sphereRadius: 0.05;" hand-controls="hand: left; handModelStyle: lowPoly;"
+      sphere-collider="objects: .cube;" grab></a-entity>
+
+    <a-entity class="hand" collider-check raycaster="objects: .collidable; showLine:true;"
+      static-body="shape: sphere; sphereRadius: 0.05;" hand-controls="hand: right; handModelStyle: lowPoly;"
+      sphere-collider="objects: .cube;" grab>
+
+      <a-entity id="pointsText" position="0.3 0.2 0" rotation="-10 0 0" scale="1 1 1"
+        text="value:Points: 0;"></a-entity>
+      <a-entity id="timeText" position="0.3 0.15 0" rotation="-10 0 0" scale="1 1 1" text="value:Time: 0;"></a-entity>
+    </a-entity>
+
+
+    <!-- MUSIC -->
+    <a-entity class="cube" id="radio" dynamic-body geometry="primitive: box; width: 2; height: 1.2; depth: 0.5"
+      material="opacity:0; transparent:true" scale="0.2 0.2 0.2" position="1.8 2 1.4" rotation="0 -120 0">
+      <a-entity gltf-model="#radio-glb" position="0 -0.6 0"></a-entity>
+      <!-- MUSIC -->
+      <a-sound src="src: url(./assets/music.mp3)" autoplay="true" loop="true" position="0 2 0"></a-sound>
+    </a-entity>
+
+
+    <!-- TITLE -->
+    <a-image src="#titleImg" position="0 4 4" scale="5 2 2" rotation="0 180 0"></a-image>
+
+
+    <!-- TABLE -->
+    <a-entity geometry="primitive: box; width: 13; height: 4; depth: 4" material="opacity:0; transparent:true"
+      static-body scale="0.3 0.3 0.3" position="0 0.5 1.8"></a-entity>
+    <a-entity static-body scale="0.3 0.3 0.3" position="0 0.5 2.5"></a-entity>
+    <a-entity gltf-model="#table_metal" scale="3 2 2" position="0 0.61 1.8"></a-entity>
+
+
+    <!-- PEDESTAL -->
+    <a-entity id="pedestal" geometry="primitive: box; width: 1.3; height: 3.6; depth: 1.3" static-body
+      gltf-model="#pedestal" scale="0.5 0.5 0.5" position="0 0 -0.8"></a-entity>
+    <!-- PLAQUETTE -->
+    <a-entity dynamic-body id="plaquette" geometry="primitive: box; width: 1.8; height: 0.8; depth: 0.2"
+      gltf-model="#plaquette" scale="0.2 0.2 0.1" rotation="45 0 180" class="cube" position="0 1 -0.8"></a-entity>
+
+
+    <!-- TERRAIN -->
+    <a-grid static-body id="ground" position="0 0.08 0" material="transparent:true; opacity:0;"></a-grid>
+    <a-sky color="#87ceeb"></a-sky>
+    <a-entity gltf-model="#park" scale="5 5 5" position="0 9.5 0"></a-entity>
+
+
+    <!-- LIGHTS -->
+    <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
+    <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
+    <a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity>
+
+
+  </a-scene>
+
+
+  <script type="module" src="js/main.js"></script>
+
+
+</body>
+
+</html>

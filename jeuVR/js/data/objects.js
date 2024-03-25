@@ -1,0 +1,353 @@
+let object = {
+    "0": {
+        "name": "postit",
+        "boxPosition": {
+            "x": 1.4,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.09,
+            "height": 0.06,
+            "depth": 0.09
+        },
+        "class": "pink"
+    },
+    "1": {
+        "name": "peach",
+        "boxPosition": {
+            "x": 1.6,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "sphere",
+            "radius": 0.12
+        },
+        "class": "green"
+    },
+    "2": {
+        "name": "paper",
+        "boxPosition": {
+            "x": 1,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.24,
+            "height": 0.06,
+            "depth": 0.24
+        },
+        "class": "pink"
+    },
+    "3": {
+        "name": "obergine",
+        "boxPosition": {
+            "x": 0.8,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.06,
+            "height": 0.18,
+            "depth": 0.18
+        },
+        "class": "green"
+    },
+    "4": {
+        "name": "mac",
+        "boxPosition": {
+            "x": 0.6,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": -0.1,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.18,
+            "height": 0.24,
+            "depth": 0.3
+        },
+        "class": "blue"
+    },
+    "5": {
+        "name": "knife",
+        "boxPosition": {
+            "x": 0.4,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.06,
+            "height": 0.06,
+            "depth": 0.36
+        },
+        "class": "red"
+    },
+    "6": {
+        "name": "keyboard",
+        "boxPosition": {
+            "x": 0.2,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.24,
+            "height": 0.06,
+            "depth": 0.09
+        },
+        "class": "blue"
+    },
+    "7": {
+        "name": "ketchup",
+        "boxPosition": {
+            "x": 0,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": -0.2,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.06,
+            "height": 0.42
+        },
+        "class": "yellow"
+    },
+    "8": {
+        "name": "headphones",
+        "boxPosition": {
+            "x": -0.2,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.282,
+            "height": 0.24,
+            "depth": 0.09
+        },
+        "class": "blue"
+    },
+    "9": {
+        "name": "glass",
+        "boxPosition": {
+            "x": -0.4,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": -0.05,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.06,
+            "height": 0.3
+        },
+        "class": "orange"
+    },
+    "10": {
+        "name": "coca",
+        "boxPosition": {
+            "x": -0.6,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.06,
+            "height": 0.18
+        },
+        "class": "red"
+    },
+    "11": {
+        "name": "brocolis",
+        "boxPosition": {
+            "x": -0.8,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "sphere",
+            "radius": 0.09
+        },
+        "class": "green"
+    },
+    "12": {
+        "name": "book",
+        "boxPosition": {
+            "x": -1,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.12,
+            "height": 0.03,
+            "depth": 0.15
+        },
+        "class": "pink"
+    },
+    "13": {
+        "name": "bocale",
+        "boxPosition": {
+            "x": -1.2,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.06,
+            "height": 0.21
+        },
+        "class": "orange"
+    },
+    "14": {
+        "name": "bag",
+        "boxPosition": {
+            "x": -1.4,
+            "y": 2.5,
+            "z": 2
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "box",
+            "width": 0.24,
+            "height": 0.06,
+            "depth": 0.15
+        },
+        "class": "yellow"
+    },
+    "15": {
+        "name": "tin",
+        "boxPosition": {
+            "x": -1,
+            "y": 2.5,
+            "z": 1.8
+        },
+        "childPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.09,
+            "height": 0.24
+        },
+        "class": "red"
+    },
+    "16": {
+        "name": "water",
+        "boxPosition": {
+            "x": -0.8,
+            "y": 2.5,
+            "z": 1.8
+        },
+        "childPosition": {
+            "x": 0,
+            "y": -0.0,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.06,
+            "height": 0.3
+        },
+        "class": "yellow"
+    },
+    "17": {
+        "name": "wine",
+        "boxPosition": {
+            "x": -0.6,
+            "y": 2.5,
+            "z": 1.8
+        },
+        "childPosition": {
+            "x": 0,
+            "y": -0.1,
+            "z": 0
+        },
+        "geometry": {
+            "primitive": "cylinder",
+            "radius": 0.06,
+            "height": 0.42
+        },
+        "class": "orange"
+    }
+}
+
+export default object;
