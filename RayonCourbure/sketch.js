@@ -1,6 +1,6 @@
 const spreadFactor = 10;
 let rValue = 115;
-const nAngles = 180;
+const nAngles = 120;
 
 let maxValue = 0;
 let maxCenter = [0, 0];
