@@ -1,4 +1,4 @@
-const radiusExtraction = 50;
+const radiusExtraction = 170;
 const radiusSearch = 10;
 const epsilonSearch = 0.001;
 
@@ -11,7 +11,7 @@ let bestCircle = null;
 let currentError = 0;
 
 function preload() {
-    img = loadImage("fibre500x100.png");
+    img = loadImage("fibre853x100.png");
 }
 
 function setup() {
@@ -37,10 +37,11 @@ function setup() {
             }
         }
         // Add a point to the contour
-        contour.push({ x: p1.x, y: (p1.y + p2.y) / 2 });
+        if (p1 && p2)
+            contour.push({ x: p1.x, y: (p1.y + p2.y) / 2 });
     }
     // Smooth the contour
-    for (let cpt = 0; cpt < 2; cpt++) {
+    for (let cpt = 0; cpt < 10; cpt++) {
         let smoothedContour = [];
         smoothedContour.push(contour[0]);
         for (let i = 1; i < contour.length - 1; i++) {
@@ -71,14 +72,19 @@ function draw() {
         // Draw a blue box around the selected point
         noFill();
         stroke(50, 50, 200);
-        rect(selectedPoint.x - radiusExtraction, selectedPoint.y - radiusExtraction/2, radiusExtraction*2, radiusExtraction);
+        rect(selectedPoint.x - radiusExtraction, selectedPoint.y - radiusExtraction/6, radiusExtraction*2, radiusExtraction/3);
         stroke(255, 0, 0);
         ellipse(bestCircle.x, bestCircle.y, bestCircle.r * 2);
+
+        // Draw the selected point with a blue cross
+        stroke(50, 50, 200);
+        line(selectedPoint.x - 15, selectedPoint.y, selectedPoint.x + 15, selectedPoint.y);
+        line(selectedPoint.x, selectedPoint.y + 15, selectedPoint.x, selectedPoint.y - 15);
 
         fill(255, 0, 0);
         textSize(16);
         text(`R = ${nf(bestCircle.r, 1, 4)} px`, width - 150, 20);
-        text(`Erreur = ${nf(currentError, 1, 5)}`, width - 150, 40);
+        text(`Erreur = ${nf(currentScore, 1, 5)}`, width - 150, 40);
         if (currentRadiusSearch > epsilonSearch) {
             optimizeBestCircle();
         }
@@ -90,7 +96,7 @@ function draw() {
         selectedPoint = clickedPoint;
         extractCloseContour();
         bestCircle = {x: selectedPoint.x, y: height * 2, r: height * 2 - selectedPoint.y};
-        currentError = computeError(bestCircle);
+        currentScore = computeError(bestCircle);
         currentRadiusSearch = radiusSearch;
     }
 }
@@ -138,9 +144,9 @@ function optimizeBestCircle() {
         }
     }
     // Update the best circle if the error is smaller
-    if (minError < currentError) {
+    if (minError < currentScore) {
         bestCircle = { x: bestPoint.x, y: bestPoint.y, r: dist(bestPoint.x, bestPoint.y, selectedPoint.x, selectedPoint.y) };
-        currentError = minError;
+        currentScore = minError;
     }
     else {
         currentRadiusSearch /= 2;
