@@ -159,8 +159,8 @@ function computeError(circle) {
     let error = 0;
     for (let p of closeContour) {
         let d = dist(p.x, p.y, circle.x, circle.y);
-        //if (d < circle.r) return width;
-        error += pow(d - circle.r, 2);
+        if (d < circle.r) error += 2 * pow(d - circle.r, 2);
+        else error += pow(d - circle.r, 2);
     }
     return sqrt(error)/closeContour.length;
 }
