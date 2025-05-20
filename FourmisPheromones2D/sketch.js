@@ -8,9 +8,9 @@ const decayRate = 0.99;
 const EPSILON = 0.0001;
 const explorationRate = 0.2;
 const maxAge = 1500;
-const exclusionRadius = nbCases/3;
+const exclusionRadius = 20;
 const yCenter = nbCases + 5;
-const xCenter = nbCases/2;
+const xCenter = nbCases / 2;
 
 let fourmis = [];
 let pheromones = [];
@@ -63,44 +63,22 @@ function draw() {
   background(220);
   for (let i = 0; i < nbCases; i++) {
     for (let j = 0; j < nbCases; j++) {
-      let pheromoneValue = pheromones[i][j];
-      if (pheromoneValue > EPSILON) {
-        fill(255 - pheromoneValue * 5);
-      } else {
-        fill(255);
+      if (!isValid(i, j)) {
+        fill(255, 0, 0);
+      }
+      else {
+        let pheromoneValue = pheromones[i][j];
+        if (pheromoneValue > EPSILON) {
+          fill(255 - pheromoneValue * 5, 255 - pheromoneValue * 5, 150);
+        } else {
+          fill(255);
+        }
       }
       rect(i * width / nbCases, j * height / nbCases,
         width / nbCases, height / nbCases);
       pheromones[i][j] *= decayRate;
     }
   }
-  // Smooth the pheromone values wih a Gaussian filter
-  // let nextPheromones = [];
-  // for (let i = 0; i < nbCases - 1; i++) {
-  //   nextPheromones.push([]);
-  //   for (let j = 0; j < nbCases - 1; j++) {
-  //     let sum = 0;
-  //     let count = 0;
-  //     for (let k = -1; k <= 1; k++) {
-  //       for (let l = -1; l <= 1; l++) {
-  //         if (i + k < 0 || i + k >= nbCases || j + l < 0 || j + l >= nbCases) {
-  //           continue;
-  //         }
-  //         sum += pheromones[i + k][j + l];
-  //         count++;
-  //       }
-  //     }
-  //     let avg = sum / count;
-  //     let v = pheromones[i][j]*0.999 + avg * 0.001;
-  //     nextPheromones[i].push(v);
-  //   }
-  // }
-  // // Copy the smoothed pheromone values back to the original array
-  // for (let i = 1; i < nbCases - 1; i++) {
-  //   for (let j = 1; j < nbCases - 1; j++) {
-  //     pheromones[i][j] = nextPheromones[i][j];
-  //   }
-  // }
 
   for (let i = 0; i < nFourmis; i++) {
     let fourmi = fourmis[i];
@@ -120,7 +98,7 @@ function draw() {
           if (k == fourmi.x || l == fourmi.y) {
             continue;
           }
-          if (k >= 0 && k < nbCases && l >= 0 && l < nbCases) {
+          if (k >= 0 && k < nbCases && l >= 0 && l < nbCases && (isValid(k, l))) {
             sumPheromone += pheromones[k][l];
             probas.push({ p: pheromones[k][l], x: k, y: l });
           }
@@ -134,11 +112,9 @@ function draw() {
         for (let j = 0; j < probas.length; j++) {
           r -= probas[j].p;
           if (r < 0) {
-            if (isValid(probas[j].x, probas[j].y)) {
-              fourmi.x = probas[j].x;
-              fourmi.y = probas[j].y;
-              break;
-            }
+            fourmi.x = probas[j].x;
+            fourmi.y = probas[j].y;
+            break;
           }
         }
       }
@@ -162,7 +138,7 @@ function draw() {
         if (found) {
           continue;
         }
-        pheromones[x][y] += 10*(1 - fourmi.run.length / maxAge) * j / fourmi.run.length;
+        pheromones[x][y] += 10 * (1 - fourmi.run.length / maxAge) * j / fourmi.run.length;
         // pheromones[x][y] += p; 
         // p *= decayRate;
         // if (p < EPSILON) {
