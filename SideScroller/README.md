@@ -46,6 +46,9 @@ Jeu de plateforme side-scroller développé avec **p5play** (bibliothèque basé
   - Superposition gérée par tri en profondeur (basé sur Y)
   
 - **Montagne** : Élément d'arrière-plan
+  - Chargée dans `preload()` et initialisée au premier frame
+  - Redimensionnée selon `mountainScale` (défaut: 50% de la taille originale)
+  - Positionnée avec `mountainAjustY` pour un alignement précis avec le sol
   - Effet de parallaxe (vitesse réduite de 50% par rapport aux buissons)
   - Crée une impression de profondeur
 
@@ -57,6 +60,10 @@ const speed = 4;                    // Vitesse de défilement
 const hauteurSol = 300;            // Hauteur de la zone de sol
 const appGoldRock = 80;            // Fréquence d'apparition (en frames)
 world.gravity.y = 10;              // Gravité du monde physique
+
+// Configuration de la montagne
+let mountainScale = 0.5;           // Échelle de la montagne (50% de la taille originale)
+let mountainAjustY = 372;          // Ajustement vertical de la position
 ```
 
 ### Variables principales
@@ -82,6 +89,7 @@ world.gravity.y = 10;              // Gravité du monde physique
 #### `preload()`
 Précharge tous les assets nécessaires :
 - 4 images de buissons (`bush1.png` à `bush4.png`)
+- Image de la montagne (`mountain.png`)
 - Image de pièce d'or (`gold.png`)
 - Image de rocher (`rock.png`)
 - Image du code promo (`code-promo.avif`)
@@ -192,6 +200,8 @@ Vous pouvez facilement modifier le comportement du jeu en ajustant ces constante
 - `hauteurSol` : Hauteur de la zone de sol (défaut: 300)
 - `appGoldRock` : Fréquence d'apparition des items en frames (défaut: 80)
 - `world.gravity.y` : Force de gravité (défaut: 10)
+- `mountainScale` : Échelle de la montagne (défaut: 0.5 = 50%)
+- `mountainAjustY` : Ajustement vertical de la montagne (défaut: 372)
 - `goldCount >= 5` : Nombre de pièces requis pour gagner
 - `flashEffect = 30` : Durée du clignotement après un rocher
 - `perso.vel.y = -10` : Force du saut
