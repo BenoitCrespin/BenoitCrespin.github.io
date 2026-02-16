@@ -33,11 +33,8 @@ let flashEffect = 0;  // Durée de l'effet de clignotement
 let animatingGolds = [];  // Pièces d'or en cours d'animation après collecte
 let gameOver = false;  // État de victoire
 
-let mountain = {
-	img: loadImage('./assets/mountain.png'),
-	x: random(width),  // Position de départ à droite de l'écran
-	y: hauteurSol,
-}
+let mountainImg, mountainScale = 0.5, mountainAjustY = 372;
+let mountain = {};
 
 // Précharger les images de buissons
 preload = function () {
@@ -49,6 +46,7 @@ preload = function () {
 	goldImg = loadImage('./assets/gold.png');
 	rockImg = loadImage('./assets/rock.png');
 	promoImg = loadImage('./assets/code-promo.avif');
+	mountainImg = loadImage('./assets/mountain.png');
 };
 
 function spawnBush(startX = null) {
@@ -76,6 +74,17 @@ function spawnBush(startX = null) {
 }
 
 function update() {
+	// Initialiser l'objet mountain au premier frame (après le chargement de l'image)
+	if (!mountain.img) {
+		
+		mountain = {
+			img: mountainImg,
+			x: random(width),
+			width: mountainImg.width * mountainScale,
+			height: mountainImg.height * mountainScale
+		};
+	}
+	
 	// Vérifier si on a atteint 5 pièces
 	if (goldCount >= 5) {
 		gameOver = true;
@@ -141,7 +150,7 @@ function update() {
 	rect(0, height - hauteurSol, width, hauteurSol);
 
 	// Dessiner la montagne en arrière-plan
-	image(mountain.img, mountain.x, mountain.y, mountain.width, mountain.height);
+	image(mountain.img, mountain.x, height - hauteurSol - mountainAjustY, mountain.width, mountain.height);
 	// Faire bouger la montagne lentement pour créer un effet de parallaxe
 	mountain.x -= speed * 0.5;  // Vitesse de déplacement de la montagne (plus lente que les buissons)
 	if (mountain.x <= -450) {
